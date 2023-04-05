@@ -1,12 +1,12 @@
 Package: multiloadr
 Type: Package
 Title: Load the packages relevant to a project within a session.
-Version: 0.1.0
-Author: Dony Unardi
-Maintainer: Dony Unardi
+Version: 0.0.1
+Author@R: person("Dony", "Unardi", email = "unardid@gene.com", role = c("aut", "cre"))
 Description: The purpose of this package is to assist in loading the R packages that serve as 
-    immediate dependencies for the R package currently being worked on.
-License: What license is it under?
+    immediate dependencies for the R package currently being worked on. This package is useful for 
+    developing multiple interdependent R packages.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
