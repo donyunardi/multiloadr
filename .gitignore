@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.Rbuildignore
+.Rdata
+.httr-oauth
+.DS_Store
