@@ -2,14 +2,26 @@
 % Please edit documentation in R/load_pkgs.R
 \name{load_pkgs}
 \alias{load_pkgs}
-\title{Load packages listed in the multiloadr option}
+\title{Load packages and switch git branch if specified}
 \usage{
-load_pkgs()
+load_pkgs(branch_name = NULL)
+}
+\arguments{
+\item{branch_name}{Character string specifying the name of the git branch to
+switch to. Defaults to \code{NULL}.}
+}
+\value{
+This function returns nothing, but prints a message indicating which
+packages were loaded and from which branch.
 }
 \description{
-This function loads packages listed in the multiloadr option using the \code{devtools::load_all()} function.
+This function loads packages specified in the \code{multiloadr} option and
+switches to a specified git branch if provided.
 }
 \examples{
+# Load packages without switching branch
 load_pkgs()
 
+# Load packages and switch to "develop" branch
+load_pkgs("develop")
 }
