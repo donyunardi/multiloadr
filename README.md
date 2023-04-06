@@ -26,11 +26,19 @@ This enhancement might necessitate an update to a function in PackageB as well.
 If you're developing both packages, you can use multiloadr to follow these steps:
 ``` r
 library(multiloadr)
+
+# add packages to multiloadr
 add_pkgs("packageA", "local-path-to-packageA")
 add_pkgs("packageB", "local-path-to-packageB")
+
+# load packages from presently active branch
 load_pkgs()
+
+# load packages from develop branch
+load_pkgs(branch_name = "develop")
 ```
 
 Executing this action loads both packages into your current session, allowing
 you to assess the impact of PackageA update on PackageB without rebuilding or
 reinstall all packages.
+

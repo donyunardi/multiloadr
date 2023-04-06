@@ -23,6 +23,6 @@ switches to a specified git branch if provided.
 # Load packages without switching branch
 load_pkgs()
 
-# Load packages and switch to "develop" branch
+# Load packages from "develop" branch
 load_pkgs("develop")
 }
