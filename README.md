@@ -1,6 +1,6 @@
 # multiloadr
 
-multiloadr is a highly useful R package that streamlines the process of loading
+`multiloadr` is a highly useful R package that streamlines the process of loading
 R packages that are essential dependencies for a project within a session.
 
 This package is especially handy when working on multiple R packages that rely
@@ -9,7 +9,7 @@ makes the overall workflow more efficient.
 
 ## Installation
 
-You can install the development version of multiloadr like so:
+You can install the development version of `multiloadr` like so:
 
 ``` r
 library(devtools)
