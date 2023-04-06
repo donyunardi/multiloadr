@@ -7,8 +7,8 @@
 reset_multiloadr()
 }
 \description{
-This function resets the multiloadr option to NULL, effectively removing all previously loaded
-packages.
+This function resets the multiloadr option to NULL, effectively removing all
+previously loaded packages.
 }
 \examples{
 reset_multiloadr()

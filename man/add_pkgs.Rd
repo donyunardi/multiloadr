@@ -24,6 +24,4 @@ package name.
 # Add package path to multiloadr option
 add_pkgs("dplyr", "/path/to/dplyr")
 
-# Retrieve package path from multiloadr option
-getOption("multiloadr")$dplyr
 }
