@@ -1,6 +1,7 @@
 #' Load packages listed in the multiloadr option
 #'
-#' This function loads packages listed in the multiloadr option using the \code{devtools::load_all()} function.
+#' This function loads packages listed in the multiloadr option using the
+#' \code{devtools::load_all()} function.
 #'
 #' @examples
 #' load_pkgs()
@@ -15,10 +16,12 @@ load_pkgs <- function() {
   for (i in seq_along(pkgs)) {
     pkg <- names(pkgs)[i]
     path <- pkgs[[i]]
-    branch <- system(paste("cd", path, "&& git branch --show-current"), intern = TRUE)
+    branch <- system(
+      paste("cd", path, "&& git branch --show-current"), intern = TRUE
+    )
     cat(
       sprintf(
-        "Loading \033[0;94m%s\033[0m from \033[0;92m%s\033[0m branch.\n",
+        "Load \033[0;94m%s\033[0m from the \033[0;92m%s\033[0m branch.\n",
         pkg, branch
       )
     )

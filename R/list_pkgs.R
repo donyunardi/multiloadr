@@ -21,7 +21,9 @@ list_pkgs <- function(){
   for (i in seq_along(pkgs)) {
     pkg <- names(pkgs)[i]
     path <- pkgs[[i]]
-    branch <- system(paste("cd", path, "&& git branch --show-current"), intern = TRUE)
+    branch <- system(
+      paste("cd", path, "&& git branch --show-current"), intern = TRUE
+    )
     cat(
       sprintf(
         "Package Name: \033[0;94m%s\033[0m\nPath: %s\nCurrently in \033[0;92m%s\033[0m branch.\n\n",
@@ -29,4 +31,5 @@ list_pkgs <- function(){
       )
     )
   }
+  invisible()
 }

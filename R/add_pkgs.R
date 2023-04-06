@@ -16,8 +16,6 @@
 #' # Add package path to multiloadr option
 #' add_pkgs("dplyr", "/path/to/dplyr")
 #'
-#' # Retrieve package path from multiloadr option
-#' getOption("multiloadr")$dplyr
 add_pkgs <- function(pkg_name, path) {
 
   multiloadr <- getOption("multiloadr", NULL)
@@ -29,4 +27,5 @@ add_pkgs <- function(pkg_name, path) {
     options(multiloadr = c(new_entry))
   }
 
+  invisible()
 }
