@@ -8,7 +8,8 @@ load_pkgs(branch_name = NULL)
 }
 \arguments{
 \item{branch_name}{Character string specifying the name of the git branch to
-switch to. Defaults to \code{NULL}.}
+switch to. Defaults to \code{NULL}. In case the branch is non-existent, it
+will be loaded from the presently active branch.}
 }
 \value{
 This function returns nothing, but prints a message indicating which

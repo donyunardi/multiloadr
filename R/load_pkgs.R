@@ -4,7 +4,8 @@
 #' switches to a specified git branch if provided.
 #'
 #' @param branch_name Character string specifying the name of the git branch to
-#' switch to. Defaults to \code{NULL}.
+#' switch to. Defaults to \code{NULL}. In case the branch is non-existent, it
+#' will be loaded from the presently active branch.
 #'
 #' @return This function returns nothing, but prints a message indicating which
 #' packages were loaded and from which branch.
@@ -56,6 +57,14 @@ load_pkgs <- function(branch_name = NULL) {
       )
     )
 
+    system2(
+      "cd",
+      args = c(path, "&& git pull"),
+      stdout = FALSE,
+      stderr = FALSE
+    )
+
     load_all(path)
+    cat("\n")
   }
 }
