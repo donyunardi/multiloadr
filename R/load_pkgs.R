@@ -4,8 +4,8 @@
 #' switches to a specified git branch if provided.
 #'
 #' @param branch_name Character string specifying the name of the git branch to
-#' switch to. Defaults to \code{NULL}. In case the branch is non-existent, it
-#' will be loaded from the presently active branch.
+#' switch to. Defaults to \code{NULL}. In case the branch is NULL or
+#' non-existent, it will be loaded from the presently active branch.
 #'
 #' @return This function returns nothing, but prints a message indicating which
 #' packages were loaded and from which branch.
