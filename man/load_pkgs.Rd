@@ -4,20 +4,26 @@
 \alias{load_pkgs}
 \title{Load packages and switch git branch if specified}
 \usage{
-load_pkgs(branch_name = NULL)
+load_pkgs(branch_name = NULL, git_pull = FALSE)
 }
 \arguments{
 \item{branch_name}{Character string specifying the name of the git branch to
 switch to. Defaults to \code{NULL}. In case the branch is NULL or
 non-existent, it will be loaded from the presently active branch.}
+
+\item{git_pull}{A logical value indicating whether to perform a `git pull``
+before loading the package.}
 }
 \value{
 This function returns nothing, but prints a message indicating which
 packages were loaded and from which branch.
 }
 \description{
-This function loads packages specified in the \code{multiloadr} option and
-switches to a specified git branch if provided.
+This code loads packages based on the multiloadr option provided. It has an
+additional feature that allows loading packages from a particular branch if
+specified. If not, the function will load packages from the currently active
+branch. The function also provides an optional argument to execute a git pull
+before loading the packages.
 }
 \examples{
 # Load packages without switching branch
