@@ -26,7 +26,7 @@
 #' load_pkgs("develop")
 load_pkgs <- function(branch_name = NULL, git_pull = FALSE) {
 
-  pkgs <- getOption("multiloadr", NULL)
+  pkgs <- get_multiloadr_pkgs()
 
   if (is.null(pkgs)) {
     message("No packages to load")

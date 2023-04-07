@@ -13,17 +13,23 @@
 #' }
 #'
 list_pkgs <- function(){
-  pkgs <- getOption("multiloadr", NULL)
+
+  pkgs <- get_multiloadr_pkgs()
+
   if (is.null(pkgs)) {
     message("No packages to list.")
     invisible()
   }
+
   for (i in seq_along(pkgs)) {
+
     pkg <- names(pkgs)[i]
     path <- pkgs[[i]]
+
     branch <- system(
       paste("cd", path, "&& git branch --show-current"), intern = TRUE
     )
+
     cat(
       sprintf(
         "Package Name: \033[0;94m%s\033[0m\nPath: %s\nCurrently in \033[0;92m%s\033[0m branch.\n\n",
