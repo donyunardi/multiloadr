@@ -1,3 +1,5 @@
-# multiloadr 0.1.0
+# multiloadr 0.0.1
 
-* Added a `NEWS.md` file to track changes to the package.
+* Created four main functions: add_pkgs, list_pkgs, load_pkgs, and reset_multiloadr
+* Add branch_name and git_pull argument to load_pkgs
+
