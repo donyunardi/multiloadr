@@ -16,26 +16,32 @@ library(devtools)
 install_github("donyunardi/multiloadr")
 ```
 
-## Example
+## Usage
 
 Suppose you are currently working on PackageA, which functions as a dependency
-for PackageB, and you want to enhance a function in PackageA.
+for PackageB and packageC, and you want to enhance a function in PackageA.
 
-This enhancement might necessitate an update to a function in PackageB as well.
+This enhancement might necessitate an update to a function in PackageB and
+packageC as well.
 
-If you're developing both packages, you can use multiloadr to follow these steps:
+If you're developing all packages, you can use multiloadr to load them all in
+your session:
 ``` r
 library(multiloadr)
 
 # add packages to multiloadr
 add_pkgs("packageA", "local-path-to-packageA")
 add_pkgs("packageB", "local-path-to-packageB")
+add_pkgs("packageC", "local-path-to-packageC")
 
 # load packages from presently active branch
 load_pkgs()
 
 # load packages from develop branch
 load_pkgs(branch_name = "develop")
+
+# perform git pull before loading
+load_pkgs(branch_name = "develop", git_pull = TRUE)
 ```
 
 Executing this action loads both packages into your current session, allowing
