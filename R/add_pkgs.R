@@ -32,9 +32,14 @@ add_pkgs <- function(pkg_name, path) {
     } else {
       options(multiloadr = c(new_entry))
     }
-    message("Package added to multiloadr. list_pkgs() to see all packages.")
+    cat(
+      sprintf(
+        "\n\033[0;94m%s\033[0m is added to multiloadr. run `list_pkgs()` to see all packages.\n",
+        pkg_name
+      )
+    )
   } else {
-    message("Package not added to multiloadr. Directory is not an R package.")
+    cat("Package not added to multiloadr. Directory is not an R package.")
   }
 
   invisible()
