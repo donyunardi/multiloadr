@@ -29,7 +29,7 @@ load_pkgs <- function(branch_name = NULL, git_pull = FALSE) {
   pkgs <- get_multiloadr_pkgs()
 
   if (is.null(pkgs)) {
-    message("No packages to load")
+    cat("No packages to load")
     invisible()
   }
 
@@ -46,7 +46,7 @@ load_pkgs <- function(branch_name = NULL, git_pull = FALSE) {
         stderr = FALSE
       )
       if (change_branch == 1) {
-        message(paste(branch_name, "branch doesn't exist in", pkg))
+        cat(paste(branch_name, "branch doesn't exist in", pkg))
       }
     }
 
@@ -64,13 +64,27 @@ load_pkgs <- function(branch_name = NULL, git_pull = FALSE) {
     )
 
     if (git_pull) {
-      message("Performing git pull...")
-      system2(
+      #  Check if there's remote
+      check_remote <- system2(
         "cd",
-        args = c(path, "&& git pull"),
+        args = c(path, "&& git ls-remote origin"),
         stdout = FALSE,
         stderr = FALSE
       )
+
+      if (!check_remote) {
+        cat("\033[0;92mRemote URL exists...\033[0m")
+        cat("\033[0;92mPerforming git pull...\033[0m")
+        system2(
+          "cd",
+          args = c(path, "&& git pull"),
+          stdout = FALSE,
+          stderr = FALSE
+        )
+      } else {
+        cat("Remote URL does not exist...")
+        cat("Skipping git pull...")
+      }
     }
 
     load_all(path)

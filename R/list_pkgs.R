@@ -17,7 +17,7 @@ list_pkgs <- function(){
   pkgs <- get_multiloadr_pkgs()
 
   if (is.null(pkgs)) {
-    message("No packages to list.")
+    cat("No packages to list.")
     invisible()
   }
 
