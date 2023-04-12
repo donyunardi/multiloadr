@@ -2,23 +2,23 @@
 % Please edit documentation in R/add_pkgs.R
 \name{add_pkgs}
 \alias{add_pkgs}
-\title{Add a package path to the multiloadr options}
+\title{Add a Package to \code{multiloadr}}
 \usage{
 add_pkgs(pkg_name, path)
 }
 \arguments{
 \item{pkg_name}{The name of the package to add.}
 
-\item{path}{The path to the package.}
+\item{path}{The path to the R package directory.}
 }
 \value{
 This function is called for its side effects.
 }
 \description{
-This function adds a package path to the \code{multiloadr} option, which allows R
-to load multiple packages in a single session. The \code{multiloadr} option is a
-named list of package paths, where the name of each entry corresponds to the
-package name.
+This function adds a package path to the \code{multiloadr}. In addition, this
+function verifies the existence of the directory and ensures that it is a
+valid R package directory before adding it to the multiloadr option. Once
+confirmed, the package can then be loaded using the \code{load_pkgs()} function.
 }
 \examples{
 # Add package path to multiloadr option

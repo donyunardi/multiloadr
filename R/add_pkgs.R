@@ -1,12 +1,12 @@
-#' Add a package path to the multiloadr options
+#'  Add a Package to `multiloadr`
 #'
-#' This function adds a package path to the `multiloadr` option, which allows R
-#' to load multiple packages in a single session. The `multiloadr` option is a
-#' named list of package paths, where the name of each entry corresponds to the
-#' package name.
+#' This function adds a package path to the `multiloadr`. In addition, this
+#' function verifies the existence of the directory and ensures that it is a
+#' valid R package directory before adding it to the multiloadr option. Once
+#' confirmed, the package can then be loaded using the `load_pkgs()` function.
 #'
 #' @param pkg_name The name of the package to add.
-#' @param path The path to the package.
+#' @param path The path to the R package directory.
 #'
 #' @return This function is called for its side effects.
 #'
@@ -21,10 +21,20 @@ add_pkgs <- function(pkg_name, path) {
   multiloadr <- getOption("multiloadr", NULL)
   new_entry <- setNames(list(path), noquote(pkg_name))
 
-  if (!is.null(multiloadr)) {
-    options(multiloadr = c(as.list(multiloadr), new_entry))
+  if (
+    file.exists(file.path(path, "DESCRIPTION")) &&
+    file.exists(file.path(path, "man")) &&
+    file.exists(file.path(path, "R")) &&
+    file.exists(file.path(path, "NAMESPACE"))
+  ) {
+    if (!is.null(multiloadr)) {
+      options(multiloadr = c(as.list(multiloadr), new_entry))
+    } else {
+      options(multiloadr = c(new_entry))
+    }
+    message("Package added to multiloadr. list_pkgs() to see all packages.")
   } else {
-    options(multiloadr = c(new_entry))
+    message("Package not added to multiloadr. Directory is not an R package.")
   }
 
   invisible()
