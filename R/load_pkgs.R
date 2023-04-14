@@ -46,7 +46,7 @@ load_pkgs <- function(branch_name = NULL, git_pull = FALSE) {
         stderr = FALSE
       )
       if (change_branch == 1) {
-        cat(paste(branch_name, "branch doesn't exist in", pkg))
+        cat(paste(branch_name, "branch doesn't exist in", pkg, "\n"))
       }
     }
 
@@ -73,8 +73,8 @@ load_pkgs <- function(branch_name = NULL, git_pull = FALSE) {
       )
 
       if (!check_remote) {
-        cat("\033[0;92mRemote URL exists...\033[0m")
-        cat("\033[0;92mPerforming git pull...\033[0m")
+        cat("\033[0;92mRemote URL exists...\033[0m\n")
+        cat("\033[0;92mPerforming git pull...\033[0m\n")
         system2(
           "cd",
           args = c(path, "&& git pull"),
@@ -82,8 +82,8 @@ load_pkgs <- function(branch_name = NULL, git_pull = FALSE) {
           stderr = FALSE
         )
       } else {
-        cat("Remote URL does not exist...")
-        cat("Skipping git pull...")
+        cat("Remote URL does not exist...\n")
+        cat("Skipping git pull...\n")
       }
     }
 
