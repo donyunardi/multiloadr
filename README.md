@@ -42,6 +42,10 @@ load_pkgs(branch_name = "develop")
 
 # perform git pull before loading
 load_pkgs(branch_name = "develop", git_pull = TRUE)
+
+# load packages from "develop" branch if available, or "main" branch otherwise,
+# and perform git pull
+load_pkgs(branch_name = c("develop", "main"), git_pull = TRUE)
 ```
 
 Executing this action loads both packages into your current session, allowing
