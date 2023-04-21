@@ -2,17 +2,18 @@
 % Please edit documentation in R/load_pkgs.R
 \name{load_pkgs}
 \alias{load_pkgs}
-\title{Load packages and switch git branch if specified}
+\title{Load packages from specified branch and perform git pull if specified}
 \usage{
 load_pkgs(branch_name = NULL, git_pull = FALSE)
 }
 \arguments{
-\item{branch_name}{Character string specifying the name of the git branch to
-switch to. Defaults to \code{NULL}. In case the branch is NULL or
-non-existent, it will be loaded from the presently active branch.}
+\item{branch_name}{Character vector specifying the name of the git branch(es)
+to load. Defaults to \code{NULL}. The first branch that is found will be
+loaded for each package. If it is NULL or non-existent, it will be loaded
+from the presently active branch.}
 
-\item{git_pull}{A logical value indicating whether to perform a `git pull``
-before loading the package.}
+\item{git_pull}{A logical value (TRUE/FALSE) indicating whether to perform a
+\verb{git pull} before loading the package. Defaults to \code{FALSE}.}
 }
 \value{
 This function returns nothing, but prints a message indicating which
@@ -25,10 +26,22 @@ specified. If not, the function will load packages from the currently active
 branch. The function also provides an optional argument to execute a git pull
 before loading the packages.
 }
+\details{
+The function accepts multiple branch_name arguments, but only the first
+branch that is found will be loaded for each package.
+}
 \examples{
 # Load packages without switching branch
 load_pkgs()
 
-# Load packages from "develop" branch
-load_pkgs("develop")
+# Switch to "develop" branch and load packages
+load_pkgs(branch_name = "develop")
+
+# Switch to the "develop" branch, pull the latest changes, and load packages
+load_pkgs(branch_name = "develop", git_pull = TRUE)
+
+# Load packages from "develop" branch if available, or "main" branch otherwise
+# Pull the latest changes before loading the packages
+load_pkgs(branch_name = c("develop", "main"), git_pull = TRUE)
+
 }
