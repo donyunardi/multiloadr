@@ -1,7 +1,7 @@
 #' Load packages from specified branch and perform git pull if specified
 #'
 #' This code loads packages based on the multiloadr option provided. It has an
-#' additional feature that allows loading packages from a particular branch if
+#' additional feature that allows loading packages from a particular branch or commit if
 #' specified. If not, the function will load packages from the currently active
 #' branch. The function also provides an optional argument to execute a git pull
 #' before loading the packages.
@@ -17,12 +17,18 @@
 #' @param git_pull A logical value (TRUE/FALSE) indicating whether to perform a
 #' `git pull` before loading the package. Defaults to \code{FALSE}.
 #'
+#' @param from_commit A named list indicating the commit hash to load for each package.
+#'
 #' @return This function returns nothing, but prints a message indicating which
 #' packages were loaded and from which branch.
 #'
 #' @export
 #'
 #' @examples
+#' if (interactive()) {
+#' add_pkgs("packageA", "/path/to/packageA")
+#' add_pkgs("packageB", "/path/to/packageB")
+#'
 #' # Load packages without switching branch
 #' load_pkgs()
 #'
@@ -36,7 +42,13 @@
 #' # Pull the latest changes before loading the packages
 #' load_pkgs(branch_name = c("develop", "main"), git_pull = TRUE)
 #'
-load_pkgs <- function(branch_name = NULL, git_pull = FALSE) {
+#' # Load packages from specific commit
+#' from_commit <- list(packageA = "hash_commit")
+#' load_pkgs(branch_name = "main", git_pull = TRUE, from_commit = from_commit)
+#'
+#' }
+#'
+load_pkgs <- function(branch_name = NULL, git_pull = FALSE, from_commit = list()) {
 
   pkgs <- get_multiloadr_pkgs()
 
@@ -84,11 +96,10 @@ load_pkgs <- function(branch_name = NULL, git_pull = FALSE) {
 
     current_branch <- get_current_branch(path)
 
-    head <- get_current_head(path)
-
     if (!identical(current_branch, character(0))) {
       cat(paste0(
-        "Load \033[0;94m", pkg, "\033[0m from the \033[0;92m", current_branch, "\033[0m branch.\n"
+        "Loading \033[0;94m", pkg, "\033[0m from the \033[0;92m",
+        current_branch, "\033[0m branch.\n"
       ))
     } else {
       no_current_branch_msg()
@@ -124,6 +135,19 @@ load_pkgs <- function(branch_name = NULL, git_pull = FALSE) {
       }
     }
 
+    position <- which(names(from_commit) == pkg)
+
+    if (length(position) > 0) {
+      cat(paste0("Loading from commit ", from_commit[position][[1]], "\n"))
+      system2(
+        "cd",
+        args = c(path, paste("&& git checkout", from_commit[position][[1]])),
+        stdout = FALSE,
+        stderr = FALSE
+      )
+    }
+
+    head <- get_current_head(path)
     cat(paste0("HEAD is at \033[0;92m", head, "\033[0m.\n"))
 
     load_all(path)

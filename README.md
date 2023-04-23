@@ -46,6 +46,10 @@ load_pkgs(branch_name = "develop", git_pull = TRUE)
 # load packages from "develop" branch if available, or "main" branch otherwise,
 # and perform git pull
 load_pkgs(branch_name = c("develop", "main"), git_pull = TRUE)
+
+# load packages from specific commit
+from_commit <- list(packageA = "hash_commit", packageC = "hash_commit")
+load_pkgs(branch_name = "main", git_pull = TRUE, from_commit = from_commit)
 ```
 
 Executing this action loads both packages into your current session, allowing
