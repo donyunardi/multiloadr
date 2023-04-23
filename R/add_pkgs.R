@@ -19,6 +19,7 @@
 add_pkgs <- function(pkg_name, path) {
 
   multiloadr <- getOption("multiloadr", NULL)
+
   new_entry <- setNames(list(path), noquote(pkg_name))
 
   if (
@@ -32,12 +33,10 @@ add_pkgs <- function(pkg_name, path) {
     } else {
       options(multiloadr = c(new_entry))
     }
-    cat(
-      sprintf(
-        "\n\033[0;94m%s\033[0m is added to multiloadr. run `list_pkgs()` to see all packages.\n",
-        pkg_name
-      )
-    )
+    cat(paste0(
+      "\n\033[0;94m", pkg_name, "\033[0m is added to multiloadr. ",
+      "Run `list_pkgs()` to see all packages.\n"
+    ))
   } else {
     cat("Package not added to multiloadr. Directory is not an R package.")
   }

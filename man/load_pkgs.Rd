@@ -4,7 +4,7 @@
 \alias{load_pkgs}
 \title{Load packages from specified branch and perform git pull if specified}
 \usage{
-load_pkgs(branch_name = NULL, git_pull = FALSE)
+load_pkgs(branch_name = NULL, git_pull = FALSE, from_commit = list())
 }
 \arguments{
 \item{branch_name}{Character vector specifying the name of the git branch(es)
@@ -14,6 +14,8 @@ from the presently active branch.}
 
 \item{git_pull}{A logical value (TRUE/FALSE) indicating whether to perform a
 \verb{git pull} before loading the package. Defaults to \code{FALSE}.}
+
+\item{from_commit}{A named list indicating the commit hash to load for each package.}
 }
 \value{
 This function returns nothing, but prints a message indicating which
@@ -21,7 +23,7 @@ packages were loaded and from which branch.
 }
 \description{
 This code loads packages based on the multiloadr option provided. It has an
-additional feature that allows loading packages from a particular branch if
+additional feature that allows loading packages from a particular branch or commit if
 specified. If not, the function will load packages from the currently active
 branch. The function also provides an optional argument to execute a git pull
 before loading the packages.
@@ -31,6 +33,10 @@ The function accepts multiple branch_name arguments, but only the first
 branch that is found will be loaded for each package.
 }
 \examples{
+if (interactive()) {
+add_pkgs("packageA", "/path/to/packageA")
+add_pkgs("packageB", "/path/to/packageB")
+
 # Load packages without switching branch
 load_pkgs()
 
@@ -43,5 +49,11 @@ load_pkgs(branch_name = "develop", git_pull = TRUE)
 # Load packages from "develop" branch if available, or "main" branch otherwise
 # Pull the latest changes before loading the packages
 load_pkgs(branch_name = c("develop", "main"), git_pull = TRUE)
+
+# Load packages from specific commit
+from_commit <- list(packageA = "hash_commit")
+load_pkgs(branch_name = "main", git_pull = TRUE, from_commit = from_commit)
+
+}
 
 }
