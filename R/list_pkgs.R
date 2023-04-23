@@ -24,27 +24,26 @@ list_pkgs <- function(){
   for (i in seq_along(pkgs)) {
 
     pkg <- names(pkgs)[i]
+
     path <- pkgs[[i]]
 
-    branch <- get_current_branch(path)
+    current_branch <- get_current_branch(path)
 
     head <- get_current_head(path)
 
     cat(paste0(
-      "Package Name: \033[0;94m", pkg, "\033[0m\n",
+      "\nPackage Name: \033[0;94m", pkg, "\033[0m\n",
       "Path: ", path, "\n",
       "HEAD is at \033[0;92m", head, "\033[0m.\n"
     ))
 
-    if (!identical(branch, character(0))) {
-      cat(paste0("Currently in ", branch, "branch.\n\n"))
+    if (!identical(current_branch, character(0))) {
+      cat(paste0("Currently in ", current_branch, " branch.\n\n"))
     } else {
-      cat(paste0(
-        "The current branch could not be located.\n",
-        "It is possible that the repository is currently in a detached HEAD state.\n\n"
-      ))
+      no_current_branch_msg()
     }
 
   }
+
   invisible()
 }
