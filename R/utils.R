@@ -37,7 +37,7 @@ get_current_branch <- function(path) {
 get_current_head <- function(path) {
   system2(
     "cd",
-    args = c(path, "&& git show --summary --oneline HEAD"),
+    args = c(path, "&& git log --oneline -n 1"),
     stdout = TRUE
   )
 }
