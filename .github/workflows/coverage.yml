@@ -32,13 +32,13 @@ jobs:
           r-version: ${{ matrix.r-version }}
       - name: Install dependencies
         run: |
-          install.packages("covr")
+          install.packages(c("covr", "devtools"))
         shell: Rscript {0}
 
       - name: Get percent coverage
         run: |
           message('${{ github.workspace }}')
-          x <- covr::package_coverage('${{ github.workspace }}')
+          x <- covr::package_coverage('${{ github.workspace }}', quiet=FALSE)
           p <- covr::percent_coverage(x)
         shell: Rscript {0}
 
