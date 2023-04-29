@@ -67,14 +67,15 @@ jobs:
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git status
           git pull
           if [ -n "$(git status --porcelain)" ]; then
+            echo "there are uncommitted changes"
             # if there are uncommitted changes, commit them
             git add coverage.svg
             git commit -m "Update badge"
             git push
           fi
-
 
       # - name: Push changes
       #   uses: ad-m/github-push-action@master
