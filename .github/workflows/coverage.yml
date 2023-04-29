@@ -55,14 +55,14 @@ jobs:
           COVERAGE=$(cat coverage.txt)
           curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-green.svg" > coverage.svg
 
-    - name: Commit file
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add coverage.svg # replace this with the path to your file
-        git commit -m "Update badge" # replace this with your own commit message
+      - name: Commit file
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add coverage.svg # replace this with the path to your file
+          git commit -m "Update badge" # replace this with your own commit message
 
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        branch: coverage_badge
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          branch: coverage_badge
