@@ -57,6 +57,12 @@ jobs:
           COVERAGE=$(cat coverage.txt)
           curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-green.svg" > coverage.svg
 
+      - name: Upload coverage badge
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-badge
+          path: coverage.svg
+
       - uses: actions/checkout@v3
         with:
           ref: coverage_badge
@@ -67,6 +73,7 @@ jobs:
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          ls -la
           git status
           git pull
           if [ -n "$(git status --porcelain)" ]; then
