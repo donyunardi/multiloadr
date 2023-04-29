@@ -1,6 +1,6 @@
 # multiloadr
 ![check](https://github.com/donyunardi/multiloadr/actions/workflows/r.yml/badge.svg)
-
+![coverage](https://github.com/donyunardi/multiloadr/actions/workflows/coverage.yml/coverage.svg)
 
 `multiloadr` is a highly useful R package that streamlines the process of loading
 R packages that are essential dependencies for a project within a session.
