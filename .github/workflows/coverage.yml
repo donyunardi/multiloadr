@@ -32,7 +32,7 @@ jobs:
           r-version: ${{ matrix.r-version }}
       - name: Install dependencies
         run: |
-          install.packages("devtools")
+          install.packages("covr")
         shell: Rscript {0}
 
       - name: Get percent coverage
