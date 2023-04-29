@@ -63,35 +63,37 @@ jobs:
           name: coverage-badge
           path: coverage.svg
 
-      - name: Commit changes
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add coverage.svg # replace this with the path to your file
-          git commit -m "Update badge" # replace this with your own commit message
+      # - name: Commit changes
+      #   run: |
+      #     git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      #     git config --local user.name "github-actions[bot]"
+      #     git add coverage.svg # replace this with the path to your file
+      #     git commit -m "Update badge" # replace this with your own commit message
 
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.PAT_TOKEN }}
-          branch: coverage_badge
-          force: true
+      # - name: Push changes
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     github_token: ${{ secrets.PAT_TOKEN }}
+      #     branch: coverage_badge
+      #     force: true
 
       # - uses: actions/checkout@v3
       #   with:
       #     ref: coverage_badge
 
-      # - name: Commit and push changes
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-      #   run: |
-      #     git config --global user.name "${{ github.actor }}"
-      #     git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-      #     ls -la
-      #     git status
-      #     git add coverage.svg
-      #     git commit -m "Update badge"
-      #     git push -f origin HEAD:coverage_badge coverage.svg
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          ls -la
+          git status
+          git push origin  :coverage_badge
+          ls | grep -xv "coverage.svg" | xargs rm -rf
+          git add coverage.svg
+          git commit -m "Update badge"
+          git push --set-upstream origin coverage_badge
 
       # if [ -n "$(git status --porcelain)" ]; then
       #   echo "there are uncommitted changes"
