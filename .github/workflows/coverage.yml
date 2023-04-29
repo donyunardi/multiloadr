@@ -57,9 +57,9 @@ jobs:
           COVERAGE=$(cat coverage.txt)
           curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-green.svg" > coverage.svg
 
-    - uses: actions/checkout@v3
-      with:
-        ref: coverage_badge
+      - uses: actions/checkout@v3
+        with:
+          ref: coverage_badge
 
       - name: Commit and push changes
         env:
