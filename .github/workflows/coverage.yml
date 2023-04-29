@@ -77,7 +77,7 @@ jobs:
           git status
           git add coverage.svg
           git commit -m "Update badge"
-          git push origin coverage_badge
+          git push -f origin coverage_badge coverage.svg
 
       # if [ -n "$(git status --porcelain)" ]; then
       #   echo "there are uncommitted changes"
