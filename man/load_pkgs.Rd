@@ -15,7 +15,8 @@ from the presently active branch.}
 \item{git_pull}{A logical value (TRUE/FALSE) indicating whether to perform a
 \verb{git pull} before loading the package. Defaults to \code{FALSE}.}
 
-\item{from_commit}{A named list indicating the commit hash to load for each package.}
+\item{from_commit}{A named list indicating the commit hash to load for each
+package.}
 }
 \value{
 This function returns nothing, but prints a message indicating which
@@ -23,10 +24,10 @@ packages were loaded and from which branch.
 }
 \description{
 This code loads packages based on the multiloadr option provided. It has an
-additional feature that allows loading packages from a particular branch or commit if
-specified. If not, the function will load packages from the currently active
-branch. The function also provides an optional argument to execute a git pull
-before loading the packages.
+additional feature that allows loading packages from a particular branch
+(locally or remotely) or commit if specified. If not, the function will load
+packages from the currently active branch. The function also provides an
+optional argument to execute a git pull before loading the packages.
 }
 \details{
 The function accepts multiple branch_name arguments, but only the first

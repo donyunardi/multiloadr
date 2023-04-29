@@ -1,10 +1,10 @@
 #' Load packages from specified branch and perform git pull if specified
 #'
 #' This code loads packages based on the multiloadr option provided. It has an
-#' additional feature that allows loading packages from a particular branch or commit if
-#' specified. If not, the function will load packages from the currently active
-#' branch. The function also provides an optional argument to execute a git pull
-#' before loading the packages.
+#' additional feature that allows loading packages from a particular branch
+#' (locally or remotely) or commit if specified. If not, the function will load
+#' packages from the currently active branch. The function also provides an
+#' optional argument to execute a git pull before loading the packages.
 #'
 #' The function accepts multiple branch_name arguments, but only the first
 #' branch that is found will be loaded for each package.
@@ -17,7 +17,8 @@
 #' @param git_pull A logical value (TRUE/FALSE) indicating whether to perform a
 #' `git pull` before loading the package. Defaults to \code{FALSE}.
 #'
-#' @param from_commit A named list indicating the commit hash to load for each package.
+#' @param from_commit A named list indicating the commit hash to load for each
+#' package.
 #'
 #' @return This function returns nothing, but prints a message indicating which
 #' packages were loaded and from which branch.
@@ -65,19 +66,27 @@ load_pkgs <- function(branch_name = NULL, git_pull = FALSE, from_commit = list()
 
     cat(paste0("Package: ", pkg, "\n"))
 
-    pkg_branches <- system2(
+    local_pkg_branches <- system2(
       "cd",
-      args = c(path, paste("&& git branch")),
+      args = c(path, "&& git branch"),
       stdout = TRUE
     )
 
-    pkg_branches <- trimws(gsub("^\\*", "", pkg_branches))
+    remote_pkg_branches <- system2(
+        "cd",
+        args = c(path, "&& git branch -r"),
+        stdout = TRUE
+    )
 
     if (!is.null(branch_name)) {
-
       for (branch in branch_name) {
-        if (branch %in% pkg_branches) {
-          cat(paste0("\033[0;92m", branch, " branch exist in ", pkg, "\033[0m\n"))
+        if (any(grepl(branch, c(local_pkg_branches, remote_pkg_branches)))) {
+          cat(
+            paste0(
+              "\033[0;92m", branch, " branch exist in ",
+              pkg, "\033[0m\n"
+            )
+          )
 
           system2(
             "cd",
@@ -88,10 +97,14 @@ load_pkgs <- function(branch_name = NULL, git_pull = FALSE, from_commit = list()
 
           break
         } else {
-          cat(paste0("\033[0;91m", branch, " branch doesn't exist in ", pkg, "\033[0m\n"))
+          cat(
+            paste0(
+              "\033[0;91m", branch, " branch doesn't exist in ",
+              pkg, "\033[0m\n"
+            )
+          )
         }
       }
-
     }
 
     current_branch <- get_current_branch(path)
