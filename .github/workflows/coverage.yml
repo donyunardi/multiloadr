@@ -66,9 +66,10 @@ jobs:
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git pull origin coverage_badge
           git add coverage.svg # replace this with the path to your file
           git commit -m "Update badge" # replace this with your own commit message
-          git push -f origin coverage_badge
+          git push origin coverage_badge
 
       # - name: Push changes
       #   uses: ad-m/github-push-action@master
