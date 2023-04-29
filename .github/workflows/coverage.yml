@@ -37,7 +37,7 @@ jobs:
 
       - name: Get percent coverage
         run: |
-          message({{ github.workspace }})
+          message(${{ github.workspace }})
           x <- covr::package_coverage(${{ github.workspace }})
           p <- covr::percent_coverage(x)
         shell: Rscript {0}
