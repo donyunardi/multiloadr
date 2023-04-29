@@ -57,16 +57,20 @@ jobs:
           COVERAGE=$(cat coverage.txt)
           curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-green.svg" > coverage.svg
 
+    - uses: actions/checkout@v3
+      with:
+        ref: coverage_badge
+
       - name: Commit and push changes
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          git pull origin coverage_badge
+          git pull
           git add coverage.svg # replace this with the path to your file
           git commit -m "Update badge" # replace this with your own commit message
-          git push origin coverage_badge
+          git push
 
       # - name: Push changes
       #   uses: ad-m/github-push-action@master
