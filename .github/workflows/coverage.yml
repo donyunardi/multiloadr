@@ -55,12 +55,6 @@ jobs:
           COVERAGE=$(cat coverage.txt)
           curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-green.svg" > coverage.svg
 
-      # - name: Save badge
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: coverage-badge
-      #     path: coverage.svg
-
     - name: Commit file
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
