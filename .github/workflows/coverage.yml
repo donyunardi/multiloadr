@@ -40,18 +40,19 @@ jobs:
           message('${{ github.workspace }}')
           x <- covr::package_coverage('${{ github.workspace }}', quiet=FALSE)
           p <- covr::percent_coverage(x)
+          cat(p, file = "coverage.txt", sep = "")
         shell: Rscript {0}
 
       - name: Save coverage data
         uses: actions/upload-artifact@v2
         with:
           name: coverage
-          path: coverage.json
+          path: coverage.txt
 
       - name: Generate badge
         run: |
-          cat coverage.json
-          COVERAGE=$(cat coverage.json | jq '.["totals"]["percent"]')
+          cat coverage.txt
+          COVERAGE=$(cat coverage.txt)
           curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-green.svg" > coverage.svg
 
       - name: Save badge
