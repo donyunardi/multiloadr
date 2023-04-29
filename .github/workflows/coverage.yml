@@ -83,16 +83,23 @@ jobs:
 
       - name: Commit and push changes
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.email "${{ github.actor }}@gmail.com"
+          echo "see all files..."
           ls -la
+          echo "performing git status..."
           git status
+          echo "delete coverage_badge remote branch..."
           git push origin  :coverage_badge
+          echo "delete other files except the badge..."
           ls | grep -xv "coverage.svg" | xargs rm -rf
+          echo "staging badge..."
           git add coverage.svg
+          echo "commit badge..."
           git commit -m "Update badge"
+          echo "push remote..."
           git push --set-upstream origin coverage_badge
 
       # if [ -n "$(git status --porcelain)" ]; then
