@@ -34,7 +34,9 @@ jobs:
         run: |
           install.packages("devtools")
       - name: Get percent coverage
-        run: Rscript -e 'covr::package_coverage()'
+        run: |
+          x <- covr::package_coverage()
+          p <- covr::percent_coverage(x)
       - name: Save coverage data
         uses: actions/upload-artifact@v2
         with:
@@ -42,6 +44,7 @@ jobs:
           path: coverage.json
       - name: Generate badge
         run: |
+          cat coverage.json
           COVERAGE=$(cat coverage.json | jq '.["totals"]["percent"]')
           curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-green.svg" > coverage.svg
       - name: Save badge
