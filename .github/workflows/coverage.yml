@@ -67,10 +67,14 @@ jobs:
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          git pull coverage_badge
-          git add coverage.svg # replace this with the path to your file
-          git commit -m "Update badge" # replace this with your own commit message
-          git push coverage_badge
+          git pull
+          if [ -n "$(git status --porcelain)" ]; then
+            # if there are uncommitted changes, commit them
+            git add coverage.svg
+            git commit -m "Update badge"
+            git push
+          fi
+
 
       # - name: Push changes
       #   uses: ad-m/github-push-action@master
