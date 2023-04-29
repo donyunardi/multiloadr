@@ -25,11 +25,16 @@ jobs:
         r-version: ['4.2.2']
 
     steps:
-      - uses: actions/checkout@v3
       - name: Set up R ${{ matrix.r-version }}
         uses: r-lib/actions/setup-r@f57f1301a053485946083d7a45022b278929a78a
         with:
           r-version: ${{ matrix.r-version }}
+
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+
       - name: Install dependencies
         run: |
           install.packages(c("covr", "devtools"))
