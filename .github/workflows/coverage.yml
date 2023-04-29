@@ -43,20 +43,32 @@ jobs:
           cat(p, file = "coverage.txt", sep = "")
         shell: Rscript {0}
 
-      - name: Save coverage data
+      - name: Upload percent coverage
         uses: actions/upload-artifact@v2
         with:
           name: coverage
           path: coverage.txt
 
-      - name: Generate badge
+      - name: Generate percent coverage badge
         run: |
           cat coverage.txt
           COVERAGE=$(cat coverage.txt)
           curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-green.svg" > coverage.svg
 
-      - name: Save badge
-        uses: actions/upload-artifact@v2
+      # - name: Save badge
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: coverage-badge
+      #     path: coverage.svg
+
+      - name: Commit changes
+        uses: EndBug/git-commit@v2
         with:
-          name: coverage-badge
-          path: coverage.svg
+          message: "Add coverage.svg"
+          add: "coverage.svg"
+
+      - name: Push changes
+        uses: EndBug/git-push@v1.1.0
+        with:
+          branch: coverage_badge
+          github_token: ${{ secrets.GITHUB_TOKEN }}
