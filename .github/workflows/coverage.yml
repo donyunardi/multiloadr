@@ -63,9 +63,9 @@ jobs:
           name: coverage-badge
           path: coverage.svg
 
-      - uses: actions/checkout@v3
-        with:
-          ref: coverage_badge
+      # - uses: actions/checkout@v3
+      #   with:
+      #     ref: coverage_badge
 
       - name: Commit and push changes
         env:
@@ -75,13 +75,13 @@ jobs:
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
           ls -la
           git status
-          git pull
+          git pull origin coverage_badge
           if [ -n "$(git status --porcelain)" ]; then
             echo "there are uncommitted changes"
             # if there are uncommitted changes, commit them
             git add coverage.svg
             git commit -m "Update badge"
-            git push
+            git push origin coverage_badge
           fi
 
       # - name: Push changes
