@@ -1,0 +1,88 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+#
+# See https://github.com/r-lib/actions/tree/master/examples#readme for
+# additional example workflows available for the R community.
+
+name: Coverage
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        r-version: ['4.2.2']
+
+    steps:
+      - name: Set up R ${{ matrix.r-version }}
+        uses: r-lib/actions/setup-r@f57f1301a053485946083d7a45022b278929a78a
+        with:
+          r-version: ${{ matrix.r-version }}
+
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          install.packages(c("covr", "devtools"))
+        shell: Rscript {0}
+
+      - name: Get percent coverage
+        run: |
+          message('${{ github.workspace }}')
+          x <- covr::package_coverage('${{ github.workspace }}', quiet=FALSE)
+          p <- covr::percent_coverage(x)
+          cat(p, file = "coverage.txt", sep = "")
+        shell: Rscript {0}
+
+      - name: Upload percent coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: coverage.txt
+
+      - name: Generate percent coverage badge
+        run: |
+          cat coverage.txt
+          COVERAGE=$(cat coverage.txt)
+          curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-green.svg" > coverage.svg
+
+      - name: Upload coverage badge
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-badge
+          path: coverage.svg
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noteply.github.com"
+          echo "see all files..."
+          ls -la
+          echo "performing git status..."
+          git status
+          echo "see all remote branches"
+          git show-ref
+          git ls-remote
+          if git ls-remote --exit-code --heads origin coverage_badge; then
+            echo "delete coverage_badge remote branch..."
+            git push origin  :coverage_badge
+          fi
+          echo "delete other files except the badge..."
+          ls | grep -xv "coverage.svg" | xargs rm -rf
+          echo "staging badge..."
+          git branch coverage_badge
+          git checkout coverage_badge
+          git add .
+          echo "commit badge..."
+          git commit -m "Update badge"
+          echo "push remote..."
+          git push --set-upstream origin coverage_badge

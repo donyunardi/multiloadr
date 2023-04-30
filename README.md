@@ -1,5 +1,6 @@
 # multiloadr
 ![check](https://github.com/donyunardi/multiloadr/actions/workflows/r.yml/badge.svg)
+![coverage](https://raw.githubusercontent.com/donyunardi/multiloadr/coverage_badge/coverage.svg)
 
 
 `multiloadr` is a highly useful R package that streamlines the process of loading
