@@ -39,7 +39,7 @@ jobs:
         run: |
           message('${{ github.workspace }}')
           x <- covr::package_coverage('${{ github.workspace }}', quiet=FALSE)
-          p <- covr::percent_coverage(x)
+          p <- round(covr::percent_coverage(x))
           cat(p, file = "coverage.txt", sep = "")
         shell: Rscript {0}
 
