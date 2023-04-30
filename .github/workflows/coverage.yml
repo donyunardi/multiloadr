@@ -71,6 +71,9 @@ jobs:
           ls -la
           echo "performing git status..."
           git status
+          echo "see all remote branches"
+          git show-ref
+          git ls-remote
           if git show-ref --verify --quiet refs/remotes/origin/coverage_badge; then
             echo "delete coverage_badge remote branch..."
             git push origin  :coverage_badge
