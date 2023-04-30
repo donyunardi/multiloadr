@@ -15,7 +15,7 @@ on:
     branches: [ "main" ]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -30,7 +30,7 @@ jobs:
         with:
           r-version: ${{ matrix.r-version }}
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install dependencies
         run: |
@@ -83,10 +83,10 @@ jobs:
 
       - name: Commit and push changes
         env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@gmail.com"
+          git config --global user.email "${{ github.actor }}@users.noteply.github.com"
           echo "see all files..."
           ls -la
           echo "performing git status..."
