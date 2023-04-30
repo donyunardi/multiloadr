@@ -91,8 +91,10 @@ jobs:
           ls -la
           echo "performing git status..."
           git status
-          echo "delete coverage_badge remote branch..."
-          git push origin  :coverage_badge
+          if git show-ref --verify --quiet refs/remotes/origin/coverage_badge; then
+            echo "delete coverage_badge remote branch..."
+            git push origin  :coverage_badge
+          fi
           echo "delete other files except the badge..."
           ls | grep -xv "coverage.svg" | xargs rm -rf
           echo "staging badge..."
