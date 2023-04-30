@@ -57,11 +57,11 @@ jobs:
           gt_75=$(echo "$COVERAGE > 75" | bc -l)
 
           if [ "$lt_50" -eq 1 ]; then
-            curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-critical.svg" > coverage.svg
+            curl -s "https://img.shields.io/badge/Test%20Coverage-${COVERAGE}%25-critical.svg" > coverage.svg
           elif [ "$gt_75" -eq 1 ]; then
-            curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-success.svg" > coverage.svg
+            curl -s "https://img.shields.io/badge/Test%20Coverage-${COVERAGE}%25-success.svg" > coverage.svg
           else
-            curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-important.svg" > coverage.svg
+            curl -s "https://img.shields.io/badge/Test%20Coverage-${COVERAGE}%25-important.svg" > coverage.svg
           fi
 
       - name: Upload coverage badge
