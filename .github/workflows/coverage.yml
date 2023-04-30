@@ -82,8 +82,8 @@ jobs:
       #     ref: coverage_badge
 
       - name: Commit and push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+        # env:
+        #   GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noteply.github.com"
@@ -96,6 +96,8 @@ jobs:
           echo "delete other files except the badge..."
           ls | grep -xv "coverage.svg" | xargs rm -rf
           echo "staging badge..."
+          git branch coverage_badge
+          git checkout coverage_badge
           git add coverage.svg
           echo "commit badge..."
           git commit -m "Update badge"
