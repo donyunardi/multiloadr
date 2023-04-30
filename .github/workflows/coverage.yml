@@ -11,6 +11,8 @@ name: Coverage
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 permissions:
   contents: write
@@ -53,7 +55,13 @@ jobs:
         run: |
           cat coverage.txt
           COVERAGE=$(cat coverage.txt)
-          curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-green.svg" > coverage.svg
+          if [ "$COVERAGE" -lt 50 ]; then
+            curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-critical.svg" > coverage.svg
+          elif [ "$COVERAGE" -gt 75 ]; then
+            curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-success.svg" > coverage.svg
+          else
+            curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-important.svg" > coverage.svg
+          fi
 
       - name: Upload coverage badge
         uses: actions/upload-artifact@v2
