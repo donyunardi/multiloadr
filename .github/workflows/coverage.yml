@@ -11,6 +11,8 @@ name: Coverage
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 permissions:
   contents: write
@@ -53,9 +55,12 @@ jobs:
         run: |
           cat coverage.txt
           COVERAGE=$(cat coverage.txt)
-          if [ "$COVERAGE" -lt 50 ]; then
+          lt_50=$(echo "$COVERAGE < 50" | bc -l)
+          gt_75=$(echo "$COVERAGE > 75" | bc -l)
+
+          if [ "$lt_50" -eq 1 ]; then
             curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-critical.svg" > coverage.svg
-          elif [ "$COVERAGE" -gt 75 ]; then
+          elif [ "$gt_75" -eq 1 ]; then
             curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-success.svg" > coverage.svg
           else
             curl -s "https://img.shields.io/badge/coverage-${COVERAGE}%25-important.svg" > coverage.svg
