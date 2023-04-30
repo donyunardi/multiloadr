@@ -63,27 +63,7 @@ jobs:
           name: coverage-badge
           path: coverage.svg
 
-      # - name: Commit changes
-      #   run: |
-      #     git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      #     git config --local user.name "github-actions[bot]"
-      #     git add coverage.svg # replace this with the path to your file
-      #     git commit -m "Update badge" # replace this with your own commit message
-
-      # - name: Push changes
-      #   uses: ad-m/github-push-action@master
-      #   with:
-      #     github_token: ${{ secrets.PAT_TOKEN }}
-      #     branch: coverage_badge
-      #     force: true
-
-      # - uses: actions/checkout@v3
-      #   with:
-      #     ref: coverage_badge
-
       - name: Commit and push changes
-        # env:
-        #   GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noteply.github.com"
@@ -100,28 +80,8 @@ jobs:
           echo "staging badge..."
           git branch coverage_badge
           git checkout coverage_badge
-          git add coverage.svg
+          git add .
           echo "commit badge..."
           git commit -m "Update badge"
           echo "push remote..."
           git push --set-upstream origin coverage_badge
-
-      # if [ -n "$(git status --porcelain)" ]; then
-      #   echo "there are uncommitted changes"
-      #   # if there are uncommitted changes, commit them
-      #   git add coverage.svg
-      #   git commit -m "Update badge"
-      #   git push origin coverage_badge
-      # fi
-
-      # - name: Push changes
-      #   uses: ad-m/github-push-action@master
-      #   with:
-      #     github_token: ${{ secrets.PAT_TOKEN }}
-      #     branch: coverage_badge
-
-      # - name: Push changes
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-      #   run: |
-      #     git push -f origin coverage_badge
