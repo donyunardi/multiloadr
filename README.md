@@ -2,33 +2,23 @@
 ![check](https://github.com/donyunardi/multiloadr/actions/workflows/r.yml/badge.svg)
 ![coverage](https://raw.githubusercontent.com/donyunardi/multiloadr/coverage_badge/coverage.svg)
 
+`multiloadr` is a highly useful R package that streamlines the process of
+loading R packages that are essential dependencies for a project within a
+session.
 
-`multiloadr` is a highly useful R package that streamlines the process of loading
-R packages that are essential dependencies for a project within a session.
-
-This package is especially handy when working on multiple R packages that rely
-on each other locally, as it simplifies the task of loading these packages and
-makes the overall workflow more efficient.
-
-## Installation
-
-You can install the development version of `multiloadr` like so:
-
-``` r
-library(devtools)
-install_github("donyunardi/multiloadr")
-```
+This package is particularly useful when developing multiple R packages that
+have interdependencies, as it simplifies the process of loading these packages
+in your local environment and enhances the overall efficiency of your workflow.
 
 ## Usage
+Suppose the user is currently working on PackageA, which serves as a dependency
+for PackageB and PackageC, and they want to improve a function in PackageA.
 
-Suppose you are currently working on PackageA, which functions as a dependency
-for PackageB and PackageC, and you want to enhance a function in PackageA.
+This improvement might require an update to a function in PackageB and PackageC
+as well.
 
-This enhancement might necessitate an update to a function in PackageB and
-PackageC as well.
-
-If you're developing all packages, you can use multiloadr to load them all in
-your session:
+If the user is developing all the packages, they can use multiloadr to
+load them all in their session:
 ``` r
 library(multiloadr)
 
@@ -55,7 +45,34 @@ from_commit <- list(packageA = "hash_commit", packageC = "hash_commit")
 load_pkgs(branch_name = "main", git_pull = TRUE, from_commit = from_commit)
 ```
 
-Executing this action loads both packages into your current session, allowing
-you to assess the impact of PackageA update on PackageB and PackageC without
-rebuilding or reinstall all packages.
+By executing this action, the user can load packages into their current session
+and evaluate the impact of updating PackageA on PackageB and PackageC without
+having to rebuild or reinstall all the packages.
 
+## Installation
+To install the development version of `multiloadr`, follow these steps:
+
+``` r
+library(devtools)
+install_github("donyunardi/multiloadr")
+```
+
+### Install Git
+`Git` version >= 2.24.3 is required as well. Please refer to the instructions
+provided [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+to install git in your environment.
+
+## Additional Information
+### Installing Package Dependencies before Executing `load_pkgs()`
+It is the responsibility of the user to ensure that the dependencies required
+for loading the package(s) are installed before executing `load_pkgs()`. If any
+dependencies are missing, a message will be displayed prompting the user to
+install them. To resolve the issue, the user can install the missing packages
+and then rerun the `load_pkgs()` function.
+### Git in Local R Package Folder
+`multiloadr` assumes that the local directory of the R package is under version
+control using git. In most cases, this is true, especially if the package is
+hosted in a public repository like GitHub or GitLab where users are required to
+perform a `git clone`. However, if this is not the case, please initialize the
+folder by running `git init` inside the folder directory before using
+`multiloadr`.
