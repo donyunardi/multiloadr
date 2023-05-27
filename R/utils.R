@@ -21,7 +21,7 @@ get_multiloadr_pkgs <- function() {
 get_current_branch <- function(path) {
   system2(
     "cd",
-    args = c(path, "&& git branch --show-current"),
+    args = c(path, "&& git symbolic-ref --short HEAD"),
     stdout = TRUE
   )
 }
