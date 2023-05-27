@@ -21,6 +21,12 @@ list_pkgs <- function(){
     invisible()
   }
 
+  cat(
+    paste0(
+      "You have ", length(pkgs), " package(s) in multiloadr.\n"
+    )
+  )
+
   for (i in seq_along(pkgs)) {
 
     pkg <- names(pkgs)[i]
