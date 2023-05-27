@@ -1,4 +1,4 @@
-test_that("add_pkgs, list_pkgs, load_pkgs works", {
+test_that("add_pkgs, list_pkgs, load_pkgs, rm_pkgs works", {
 
   reset_multiloadr()
   expect_output(list_pkgs(), "No packages to list.")
@@ -18,5 +18,10 @@ test_that("add_pkgs, list_pkgs, load_pkgs works", {
   expect_output(load_pkgs(branch_name = "main"), "\033\\[0;92mmain branch exist")
   expect_output(load_pkgs(git_pull = TRUE), "\033\\[0;96mStart git pull...\033\\[0m\n")
   expect_output(load_pkgs(branch_name = "notexist"), "\033\\[0;91mnotexist branch doesn't exist")
+
+  expect_output(rm_pkgs("whoami2"), "Can't find whoami2 in multiloadr")
+  rm_pkgs("whoami")
+  x <- getOption("multiloadr")
+  expect_equal(length(x), 0)
 
 })
