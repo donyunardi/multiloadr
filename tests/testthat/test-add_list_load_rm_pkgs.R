@@ -7,7 +7,8 @@ test_that("add_pkgs, list_pkgs, load_pkgs, rm_pkgs works", {
 
   temp_dir <- tempdir()
   system2("cd", args = c(temp_dir, "&& git clone https://github.com/r-lib/whoami.git"))
-  add_pkgs("whoami", file.path(temp_dir, "whoami"))
+  expect_output(add_pkgs("whoami", file.path(temp_dir, "whoami")), "added to multiloadr")
+  expect_output(add_pkgs("whoami", file.path(temp_dir, "whoami")), "already exist in multiloadr")
 
   x <- getOption("multiloadr")
 
