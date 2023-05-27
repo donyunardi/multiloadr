@@ -58,7 +58,7 @@ install_github("donyunardi/multiloadr")
 ```
 
 ### Install Git
-`Git` version >= 2.24.3 is required as well. Please refer to the instructions
+`Git` is required to use mutliloadr. Please refer to the instructions
 provided [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 to install git in your environment.
 
