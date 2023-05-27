@@ -1,4 +1,4 @@
-#'  Add a Package to `multiloadr`
+#' Add a Package to `multiloadr`
 #'
 #' This function adds a package path to the `multiloadr`. In addition, this
 #' function verifies the existence of the directory and ensures that it is a
