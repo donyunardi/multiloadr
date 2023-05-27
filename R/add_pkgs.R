@@ -19,22 +19,40 @@
 add_pkgs <- function(pkg_name, path) {
 
   multiloadr <- getOption("multiloadr", NULL)
-
   new_entry <- setNames(list(path), noquote(pkg_name))
+  pkg_exist <- pkg_name %in% names(multiloadr)
 
-  if (
-    file.exists(file.path(path, "DESCRIPTION")) &&
+  is_valid_package <- file.exists(file.path(path, "DESCRIPTION")) &&
     file.exists(file.path(path, "man")) &&
     file.exists(file.path(path, "R")) &&
     file.exists(file.path(path, "NAMESPACE"))
-  ) {
+
+  if (is_valid_package) {
+
     if (!is.null(multiloadr)) {
-      options(multiloadr = c(as.list(multiloadr), new_entry))
+      if (pkg_exist) {
+        multiloadr[[pkg_name]] <- path
+      } else {
+        options(multiloadr = c(as.list(multiloadr), new_entry))
+      }
     } else {
       options(multiloadr = c(new_entry))
     }
+
+    if (pkg_exist) {
+        cat(
+          paste0(
+            "\033[0;91m", pkg_name,
+            " already exist in multiloadr.\033[0m\n",
+            "Replacing package's path.\n"
+          )
+        )
+    } else {
+      cat(paste0(
+        "\n\033[0;94m", pkg_name, "\033[0m is added to multiloadr. "
+      ))
+    }
     cat(paste0(
-      "\n\033[0;94m", pkg_name, "\033[0m is added to multiloadr. ",
       "Run `list_pkgs()` to see all packages.\n"
     ))
   } else {
