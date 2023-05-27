@@ -42,7 +42,7 @@ add_pkgs <- function(pkg_name, path) {
     if (pkg_exist) {
         cat(
           paste0(
-            "\033[0;91m", pkg_name,
+            "\n\033[0;91m", pkg_name,
             " already exist in multiloadr.\033[0m\n",
             "Replacing package's path.\n"
           )
