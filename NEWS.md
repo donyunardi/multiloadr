@@ -7,3 +7,4 @@
 * Enhance load_pkgs to check if the directory has a remote URL when git_pull = TRUE
 * Add from_commit argument to load package from specific commit
 * Check both remote and local branch when branch_name is provided
+* Update logic when checking if branch exists remotely and locally

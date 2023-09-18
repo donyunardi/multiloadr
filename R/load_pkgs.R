@@ -73,14 +73,16 @@ load_pkgs <- function(branch_name = NULL, git_pull = FALSE, from_commit = list()
     )
 
     remote_pkg_branches <- system2(
-        "cd",
-        args = c(path, "&& git branch -r"),
-        stdout = TRUE
+      "cd",
+      args = c(path, "&& git branch -r"),
+      stdout = TRUE
     )
+
+    all_branches <- trimws(sub("origin\\/", "", sub("\\*", "", c(local_pkg_branches, remote_pkg_branches))))
 
     if (!is.null(branch_name)) {
       for (branch in branch_name) {
-        if (any(grepl(branch, c(local_pkg_branches, remote_pkg_branches)))) {
+        if (branch %in% all_branches) {
           cat(
             paste0(
               "\033[0;92m", branch, " branch exist in ",
