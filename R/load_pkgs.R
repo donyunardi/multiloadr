@@ -115,14 +115,13 @@ load_pkgs <- function(
               pkg, "\033[0m\n",
               " \033[0;91mPlease check your local changes. \033[0m"
             )
-            )
             switch(load_verbose,
               error = stop(message),
               warning = warning(message, immediate. = TRUE),
               silent = invisible(),
               cat(message)
             )
-
+          }
           break
         } else {
           cat(
@@ -168,17 +167,17 @@ load_pkgs <- function(
           )
           if (pull_error) {
             message <- paste(
-              "\033[0;91m`git pull` failed.",
+              "\033[0;91mCan't pull then", branch, "branch for\033[0;94m",
+              pkg, "\033[0m\n",
               "Please check your local changes for\033[0;94m",
               pkg, "\033[0m\n"
             )
-            if (load_verbose == "error") {
-              stop(message)
-            } else if (load_verbose == "warning") {
-              warning(message)
-            } else if (load_verbose != "silent") {
+            switch(load_verbose,
+              error = stop(message),
+              warning = warning(message, immediate. = TRUE),
+              silent = invisible(),
               cat(message)
-            }
+            )
           }
         } else {
           cat("Remote URL does not exist...\n")
