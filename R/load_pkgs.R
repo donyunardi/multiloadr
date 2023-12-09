@@ -115,14 +115,12 @@ load_pkgs <- function(
               "Please check your local changes for\033[0;94m",
               pkg, "\033[0m\n"
             )
-            if (load_verbose == "error") {
-              stop(message)
-            } else if (load_verbose == "warning") {
-              warning(message)
-            } else if (load_verbose != "silent") {
+            switch(load_verbose,
+              error = stop(message),
+              warning = warning(message, immediate. = TRUE),
+              silent = invisible(),
               cat(message)
-            }
-          }
+            )
 
           break
         } else {
