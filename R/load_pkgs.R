@@ -111,9 +111,10 @@ load_pkgs <- function(
           )
           if (checkout_error) {
             message <- paste(
-              "\033[0;91m`git checkout` failed.",
-              "Please check your local changes for\033[0;94m",
-              pkg, "\033[0m\n"
+              "\033[0;91mCan't switch to", branch, "branch for\033[0;94m",
+              pkg, "\033[0m\n",
+              " \033[0;91mPlease check your local changes. \033[0m"
+            )
             )
             switch(load_verbose,
               error = stop(message),
