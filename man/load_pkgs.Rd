@@ -4,19 +4,33 @@
 \alias{load_pkgs}
 \title{Load packages from specified branch and perform git pull if specified}
 \usage{
-load_pkgs(branch_name = NULL, git_pull = FALSE, from_commit = list())
+load_pkgs(
+  branch_name = NULL,
+  git_pull = FALSE,
+  from_commit = list(),
+  load_verbose = getOption("multiloadr.load.verbose", "warning")
+)
 }
 \arguments{
 \item{branch_name}{Character vector specifying the name of the git branch(es)
 to load. Defaults to \code{NULL}. The first branch that is found will be
 loaded for each package. If it is NULL or non-existent, it will be loaded
-from the presently active branch.}
+from the presently active branch.
+If local changes make checkout unsuccessful, the function will produce error.}
 
 \item{git_pull}{A logical value (TRUE/FALSE) indicating whether to perform a
-\verb{git pull} before loading the package. Defaults to \code{FALSE}.}
+\verb{git pull} before loading the package. Defaults to \code{FALSE}.
+If local changes make pull unsuccessful, the function will produce error.}
 
 \item{from_commit}{A named list indicating the commit hash to load for each
 package.}
+
+\item{load_verbose}{Default: \code{warning} A string that sets
+how should a pull/checkout failure be reported.
+\code{error} for stopping with an error,
+\code{warning} to show warning and continue,
+\code{message}/unset for just logging the git failure.
+Default value can be set with \code{options('multiloadr.load.verbose' = 'error')}.}
 }
 \value{
 This function returns nothing, but prints a message indicating which
@@ -35,26 +49,25 @@ branch that is found will be loaded for each package.
 }
 \examples{
 if (interactive()) {
-add_pkgs("packageA", "/path/to/packageA")
-add_pkgs("packageB", "/path/to/packageB")
+  add_pkgs("packageA", "/path/to/packageA")
+  add_pkgs("packageB", "/path/to/packageB")
 
-# Load packages without switching branch
-load_pkgs()
+  # Load packages without switching branch
+  load_pkgs()
 
-# Switch to "develop" branch and load packages
-load_pkgs(branch_name = "develop")
+  # Switch to "develop" branch and load packages
+  load_pkgs(branch_name = "develop")
 
-# Switch to the "develop" branch, pull the latest changes, and load packages
-load_pkgs(branch_name = "develop", git_pull = TRUE)
+  # Switch to the "develop" branch, pull the latest changes, and load packages
+  load_pkgs(branch_name = "develop", git_pull = TRUE)
 
-# Load packages from "develop" branch if available, or "main" branch otherwise
-# Pull the latest changes before loading the packages
-load_pkgs(branch_name = c("develop", "main"), git_pull = TRUE)
+  # Load packages from "develop" branch if available, or "main" branch otherwise
+  # Pull the latest changes before loading the packages
+  load_pkgs(branch_name = c("develop", "main"), git_pull = TRUE)
 
-# Load packages from specific commit
-from_commit <- list(packageA = "hash_commit")
-load_pkgs(branch_name = "main", git_pull = TRUE, from_commit = from_commit)
-
+  # Load packages from specific commit
+  from_commit <- list(packageA = "hash_commit")
+  load_pkgs(branch_name = "main", git_pull = TRUE, from_commit = from_commit)
 }
 
 }
