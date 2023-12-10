@@ -109,18 +109,14 @@ load_pkgs <- function(
             stdout = FALSE,
             stderr = FALSE
           )
+
           if (checkout_error) {
             message <- paste(
               "\033[0;91mCan't switch to", branch, "branch for\033[0;94m",
               pkg, "\033[0m\n",
-              " \033[0;91mPlease check your local changes. \033[0m"
+              " \033[0;91mPlease check your local changes.\033[0m\n"
             )
-            switch(load_verbose,
-              error = stop(message),
-              warning = warning(message, immediate. = TRUE),
-              silent = invisible(),
-              cat(message)
-            )
+            handle_message(message, load_verbose)
           }
           break
         } else {
@@ -169,15 +165,10 @@ load_pkgs <- function(
             message <- paste(
               "\033[0;91mCan't pull the", branch, "branch for\033[0;94m",
               pkg, "\033[0m\n",
-              "Please check your local changes for\033[0;94m",
+              " \033[0;91mPlease check your local changes for\033[0;94m",
               pkg, "\033[0m\n"
             )
-            switch(load_verbose,
-              error = stop(message),
-              warning = warning(message, immediate. = TRUE),
-              silent = invisible(),
-              cat(message)
-            )
+            handle_message(message, load_verbose)
           }
         } else {
           cat("Remote URL does not exist...\n")
@@ -208,4 +199,14 @@ load_pkgs <- function(
 
     cat("\n")
   }
+}
+
+handle_message <- function(message, load_verbose) {
+  switch(
+    load_verbose,
+    error = stop(message),
+    warning = warning(message, immediate. = TRUE),
+    silent = invisible(),
+    cat(message)
+  )
 }
