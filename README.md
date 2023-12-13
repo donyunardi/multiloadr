@@ -17,7 +17,7 @@ for PackageB and PackageC, and they want to improve a function in PackageA.
 This improvement might require an update to a function in PackageB and PackageC
 as well.
 
-If the user is developing all the packages, they can use multiloadr to
+If the user is developing all the packages, they can use `multiloadr` to
 load them all in their session:
 ``` r
 library(multiloadr)
@@ -58,7 +58,7 @@ install_github("donyunardi/multiloadr")
 ```
 
 ### Install Git
-`Git` is required to use multiloadr. Please refer to the instructions
+`Git` is required to use `multiloadr`. Please refer to the instructions
 provided [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 to install git in your environment.
 
