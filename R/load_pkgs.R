@@ -101,7 +101,7 @@ load_pkgs <- function(
 
     current_branch <- get_current_branch(path)
 
-    if (!identical(current_branch, character(0))) {
+    if (length(current_branch) > 0 && current_branch %in% all_branches) {
       cat(paste0(
         "\033[0;94m", pkg, "\033[0m will be loaded from the \033[0;92m",
         current_branch, "\033[0m branch.\n"

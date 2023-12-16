@@ -43,6 +43,16 @@ test_that("add_pkgs, list_pkgs, load_pkgs, rm_pkgs works", {
     "\033\\[0;91mnotexist branch doesn't exist"
   )
 
+  system2(
+    "cd",
+    args = c(temp_dir, "&& cd whoami && git checkout v1.2.0")
+  )
+
+  expect_output(
+    load_pkgs(git_pull = TRUE),
+    "The current branch could not be located"
+  )
+
   expect_output(rm_pkgs("whoami2"), "Can't find whoami2 in multiloadr")
   rm_pkgs("whoami")
   x <- getOption("multiloadr")
