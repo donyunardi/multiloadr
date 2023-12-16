@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         r-version: ['release']
@@ -40,10 +40,10 @@ jobs:
           use-public-rspm: true
 
       - name: Install dependencies
-        run: |
-          install.packages("devtools")
-        shell: Rscript {0}
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
 
       - name: Check
-        run: devtools::check()
-        shell: Rscript {0}
+        uses: r-lib/actions/check-r-package@v2
