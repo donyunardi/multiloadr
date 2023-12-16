@@ -38,7 +38,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c("covr", "devtools"))
+          install.packages(c("covr",))
         shell: Rscript {0}
 
       - name: Get percent coverage
@@ -50,7 +50,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Upload percent coverage
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: coverage
           path: coverage.txt
