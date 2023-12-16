@@ -30,9 +30,14 @@ jobs:
 
       - uses: actions/checkout@v3
 
+      - name: Install system dependencies for devtools
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+
       - name: Install dependencies
         run: |
-          install.packages("covr")
+          install.packages(c("covr", "devtools"))
         shell: Rscript {0}
 
       - name: Get percent coverage
