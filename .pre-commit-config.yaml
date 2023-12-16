@@ -1,0 +1,51 @@
+# All available hooks: https://pre-commit.com/hooks.html
+# R specific hooks: https://github.com/lorenzwalthert/precommit
+repos:
+-   repo: https://github.com/lorenzwalthert/precommit
+    rev: v0.3.2.9025
+    hooks:
+    -   id: style-files
+        name: Style code with `styler`
+        args: [--style_pkg=styler, --style_fun=tidyverse_style]
+    -   id: roxygenize
+        name: Regenerate package documentation
+        additional_dependencies:
+          - assertthat
+          - httr
+          - checkmate
+          - devtools
+    -   id: spell-check
+        exclude: >
+          (?x)^(
+          .*\.[rR]|
+          .*\.feather|
+          .*\.jpeg|
+          .*\.pdf|
+          .*\.png|
+          .*\.py|
+          .*\.RData|
+          .*\.rds|
+          .*\.Rds|
+          .*\.Rproj|
+          .*\.sh|
+          .*\.md|
+          .*\.json|
+          (.*/|)\_pkgdown.y[a]?ml|
+          (.*/|)\.gitignore|
+          (.*/|)\.gitlab-ci\.yml|
+          (.*/|)\.lintr|
+          (.*/|)\.pre-commit-.*|
+          (.*/|)\.Rbuildignore|
+          (.*/|)\.Renviron|
+          (.*/|)\.Rprofile|
+          (.*/|)\.travis\.yml|
+          (.*/|)appveyor\.yml|
+          (.*/|)NAMESPACE|
+          (.*/|)renv/settings\.dcf|
+          (.*/|)renv\.lock|
+          (.*/|)DESCRIPTION|
+          (.*/|)WORDLIST|
+          (.*/|)LICENSE|
+          \.github/workflows/.*|
+          data/.*|
+          )$

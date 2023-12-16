@@ -37,7 +37,7 @@ This function returns nothing, but prints a message indicating which
 packages were loaded and from which branch.
 }
 \description{
-This code loads packages based on the multiloadr option provided. It has an
+This code loads packages based on the \code{multiloadr} option provided. It has an
 additional feature that allows loading packages from a particular branch
 (locally or remotely) or commit if specified. If not, the function will load
 packages from the currently active branch. The function also provides an

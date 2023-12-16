@@ -17,11 +17,11 @@ This function is called for its side effects.
 \description{
 This function adds a package path to the \code{multiloadr}. In addition, this
 function verifies the existence of the directory and ensures that it is a
-valid R package directory before adding it to the multiloadr option. Once
+valid R package directory before adding it to the \code{multiloadr} option. Once
 confirmed, the package can then be loaded using the \code{load_pkgs()} function.
 }
 \examples{
-# Add package path to multiloadr option
+# Add package path to `multiloadr` option
 add_pkgs("dplyr", "/path/to/dplyr")
 
 }

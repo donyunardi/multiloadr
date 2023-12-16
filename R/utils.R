@@ -49,7 +49,7 @@ get_current_head <- function(path) {
 #' @return A character vector containing the message about no current branch
 #' @keywords internal
 #' @noRd
-no_current_branch_msg <- function(){
+no_current_branch_msg <- function() {
   cat(paste0(
     "\033[0;91mThe current branch could not be located.\n",
     "It is possible that the repository is currently in a detached HEAD state.\033[0m\n"

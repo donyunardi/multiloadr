@@ -4,9 +4,11 @@
 \name{multiloadr-package}
 \alias{multiloadr}
 \alias{multiloadr-package}
-\title{multiloadr: Load the packages relevant to a project within a session}
+\title{\code{multiloadr}: seamlessly load multiple R packages}
 \description{
-The purpose of this package is to assist in loading the R packages that serve as immediate dependencies for the R package currently being worked on. This package is useful for developing multiple interdependent R packages.
+A versatile workflow tool that simplifies the loading of multiple
+R packages seamlessly, offering enhanced functionality across different
+branches
 }
 \author{
 \strong{Maintainer}: Dony Unardi \email{donyunardi@gmail.com}
