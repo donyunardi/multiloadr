@@ -2,7 +2,7 @@
 % Please edit documentation in R/rm_pkgs.R
 \name{rm_pkgs}
 \alias{rm_pkgs}
-\title{Remove packages from multiloadr configuration}
+\title{Remove packages from \code{multiloadr} configuration}
 \usage{
 rm_pkgs(pkg_names)
 }

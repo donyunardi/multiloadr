@@ -1,4 +1,4 @@
-#' Remove packages from multiloadr configuration
+#' Remove packages from `multiloadr` configuration
 #'
 #' This function removes specified package(s) from the `multiloadr`
 #' configuration.
@@ -13,7 +13,6 @@
 #'
 #' @export
 rm_pkgs <- function(pkg_names) {
-
   pkgs <- get_multiloadr_pkgs()
   pkgs_exist <- pkg_names[pkg_names %in% names(pkgs)]
   pkgs_not_exist <- pkg_names[!pkg_names %in% pkgs_exist]
@@ -43,5 +42,4 @@ rm_pkgs <- function(pkg_names) {
       )
     )
   }
-
 }

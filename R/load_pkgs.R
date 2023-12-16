@@ -1,6 +1,6 @@
 #' Load packages from specified branch and perform git pull if specified
 #'
-#' This code loads packages based on the multiloadr option provided. It has an
+#' This code loads packages based on the `multiloadr` option provided. It has an
 #' additional feature that allows loading packages from a particular branch
 #' (locally or remotely) or commit if specified. If not, the function will load
 #' packages from the currently active branch. The function also provides an
@@ -202,8 +202,7 @@ load_pkgs <- function(
 }
 
 handle_message <- function(message, load_verbose) {
-  switch(
-    load_verbose,
+  switch(load_verbose,
     error = stop(message),
     warning = warning(message, immediate. = TRUE),
     silent = invisible(),

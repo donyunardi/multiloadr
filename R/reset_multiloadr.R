@@ -1,6 +1,6 @@
-#' Reset the multiloadr option to NULL
+#' Reset the `multiloadr` option to NULL
 #'
-#' This function resets the multiloadr option to NULL, effectively removing all
+#' This function resets the `multiloadr` option to NULL, effectively removing all
 #' previously loaded packages.
 #'
 #' @examples

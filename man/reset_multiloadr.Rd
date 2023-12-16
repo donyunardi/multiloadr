@@ -2,12 +2,12 @@
 % Please edit documentation in R/reset_multiloadr.R
 \name{reset_multiloadr}
 \alias{reset_multiloadr}
-\title{Reset the multiloadr option to NULL}
+\title{Reset the \code{multiloadr} option to NULL}
 \usage{
 reset_multiloadr()
 }
 \description{
-This function resets the multiloadr option to NULL, effectively removing all
+This function resets the \code{multiloadr} option to NULL, effectively removing all
 previously loaded packages.
 }
 \examples{

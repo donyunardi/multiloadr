@@ -1,5 +1,4 @@
 test_that("add_pkgs, list_pkgs, load_pkgs, rm_pkgs works", {
-
   reset_multiloadr()
   expect_output(list_pkgs(), "No packages to list.")
   expect_output(add_pkgs("testing", "/path/to/folder"), "Directory is not an R package")
@@ -24,5 +23,4 @@ test_that("add_pkgs, list_pkgs, load_pkgs, rm_pkgs works", {
   rm_pkgs("whoami")
   x <- getOption("multiloadr")
   expect_equal(length(x), 0)
-
 })

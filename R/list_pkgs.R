@@ -12,8 +12,7 @@
 #' list_pkgs()
 #' }
 #'
-list_pkgs <- function(){
-
+list_pkgs <- function() {
   pkgs <- get_multiloadr_pkgs()
 
   if (is.null(pkgs)) {
@@ -28,7 +27,6 @@ list_pkgs <- function(){
   )
 
   for (i in seq_along(pkgs)) {
-
     pkg <- names(pkgs)[i]
 
     path <- pkgs[[i]]
@@ -48,7 +46,6 @@ list_pkgs <- function(){
     } else {
       no_current_branch_msg()
     }
-
   }
 
   invisible()
