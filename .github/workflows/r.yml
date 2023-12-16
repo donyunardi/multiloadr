@@ -6,7 +6,7 @@
 # See https://github.com/r-lib/actions/tree/master/examples#readme for
 # additional example workflows available for the R community.
 
-name: R CMD Check
+name: Run R CMD Check
 
 on:
   push:
@@ -19,8 +19,8 @@ permissions:
   contents: read
 
 jobs:
-  build:
-    runs-on: ubuntu-20.04
+  rcmdcheck:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         r-version: ['release']
