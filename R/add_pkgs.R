@@ -54,7 +54,7 @@ add_pkgs <- function(pkg_name, path) {
       "Run `list_pkgs()` to see all packages.\n"
     ))
   } else {
-    cat("Package not added to multiloadr. Directory is not an R package.")
+    cat("Package not added to multiloadr. Directory is not an R package.\n")
   }
 
   invisible()

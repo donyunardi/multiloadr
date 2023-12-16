@@ -45,11 +45,13 @@
 #'   # Switch to "develop" branch and load packages
 #'   load_pkgs(branch_name = "develop")
 #'
-#'   # Switch to the "develop" branch, pull the latest changes, and load packages
+#'   # Switch to the "develop" branch, pull the latest changes,
+#'   # and load packages
 #'   load_pkgs(branch_name = "develop", git_pull = TRUE)
 #'
-#'   # Load packages from "develop" branch if available, or "main" branch otherwise
-#'   # Pull the latest changes before loading the packages
+#'   # Load packages from "develop" branch if available,
+#'   # or "main" branch if otherwise,
+#'   # and pull the latest changes before loading the packages
 #'   load_pkgs(branch_name = c("develop", "main"), git_pull = TRUE)
 #'
 #'   # Load packages from specific commit
@@ -69,29 +71,11 @@ load_pkgs <- function(
 
   for (i in seq_along(pkgs)) {
     pkg <- names(pkgs)[i]
-
     path <- pkgs[[i]]
 
     cat(paste0("Package: ", pkg, "\n"))
 
-    local_pkg_branches <- system2(
-      "cd",
-      args = c(path, "&& git branch"),
-      stdout = TRUE
-    )
-
-    remote_pkg_branches <- system2(
-      "cd",
-      args = c(path, "&& git branch -r"),
-      stdout = TRUE
-    )
-
-    all_branches <- trimws(
-      sub(
-        "origin\\/", "",
-        sub("\\*", "", c(local_pkg_branches, remote_pkg_branches))
-      )
-    )
+    all_branches <- get_local_and_remote_branches(path)
 
     if (!is.null(branch_name)) {
       for (branch in branch_name) {
@@ -102,22 +86,7 @@ load_pkgs <- function(
               "\033[0;94m", pkg, "\033[0m\n"
             )
           )
-
-          checkout_error <- system2(
-            "cd",
-            args = c(path, paste("&& git checkout", branch)),
-            stdout = FALSE,
-            stderr = FALSE
-          )
-
-          if (checkout_error) {
-            message <- paste(
-              "\033[0;91mCan't switch to", branch, "branch for\033[0;94m",
-              pkg, "\033[0m\n",
-              " \033[0;91mPlease check your local changes.\033[0m\n"
-            )
-            handle_message(message, load_verbose)
-          }
+          switch_branch(pkg, path, branch, load_verbose)
           break
         } else {
           cat(
@@ -134,46 +103,18 @@ load_pkgs <- function(
 
     if (!identical(current_branch, character(0))) {
       cat(paste0(
-        "Loading \033[0;94m", pkg, "\033[0m from the \033[0;92m",
+        "\033[0;94m", pkg, "\033[0m will be loaded from the \033[0;92m",
         current_branch, "\033[0m branch.\n"
       ))
     } else {
       no_current_branch_msg()
-      cat(paste0("Loading ", pkg, " from ", path, "\n"))
+      cat(paste0(pkg, " will be loaded from ", path, "\n"))
     }
 
     if (git_pull) {
-      cat("\033[0;96mStart git pull...\033[0m\n")
+      cat("Attemping to perform git pull...\n")
       if (!identical(current_branch, character(0))) {
-        check_remote <- system2(
-          "cd",
-          args = c(path, "&& git ls-remote origin"),
-          stdout = FALSE,
-          stderr = FALSE
-        )
-
-        if (!check_remote) {
-          cat("\033[0;96mRemote URL exists...\033[0m\n")
-          cat("\033[0;96mPerforming git pull...\033[0m\n")
-          pull_error <- system2(
-            "cd",
-            args = c(path, "&& git pull"),
-            stdout = FALSE,
-            stderr = FALSE
-          )
-          if (pull_error) {
-            message <- paste(
-              "\033[0;91mCan't pull the", branch, "branch for\033[0;94m",
-              pkg, "\033[0m\n",
-              " \033[0;91mPlease check your local changes for\033[0;94m",
-              pkg, "\033[0m\n"
-            )
-            handle_message(message, load_verbose)
-          }
-        } else {
-          cat("Remote URL does not exist...\n")
-          cat("Skipping git pull...\n")
-        }
+        check_remote_and_pull(pkg, path, current_branch, load_verbose)
       } else {
         no_current_branch_msg()
         cat("Skipping git pull...\n")
@@ -208,4 +149,82 @@ handle_message <- function(message, load_verbose) {
     silent = invisible(),
     cat(message)
   )
+}
+
+get_local_and_remote_branches <- function(path) {
+  local_pkg_branches <- system2(
+    "cd",
+    args = c(path, "&& git branch"),
+    stdout = TRUE
+  )
+
+  remote_pkg_branches <- system2(
+    "cd",
+    args = c(path, "&& git branch -r"),
+    stdout = TRUE
+  )
+
+  all_branches <- trimws(
+    sub(
+      "origin\\/", "",
+      sub("\\*", "", c(local_pkg_branches, remote_pkg_branches))
+    )
+  )
+
+  all_branches
+}
+
+switch_branch <- function(pkg_name, path, branch, load_verbose) {
+  checkout_error <- system2(
+    "cd",
+    args = c(path, paste("&& git checkout", branch)),
+    stdout = FALSE,
+    stderr = FALSE
+  )
+
+  if (checkout_error) {
+    message <- paste(
+      "\033[0;91mCan't switch to", branch, "branch for\033[0;94m",
+      pkg_name, "\033[0m\n",
+      " \033[0;91mPlease check your local changes.\033[0m\n"
+    )
+    handle_message(message, load_verbose)
+  }
+}
+
+perform_git_pull <- function(pkg_name, path, branch, load_verbose) {
+  pull_error <- system2(
+    "cd",
+    args = c(path, "&& git pull"),
+    stdout = FALSE,
+    stderr = FALSE
+  )
+  if (pull_error) {
+    message <- paste(
+      "\033[0;91mCan't pull the", branch, "branch for\033[0;94m",
+      pkg_name, "\033[0m\n",
+      " \033[0;91mPlease check your local changes for\033[0;94m",
+      pkg_name, "\033[0m\n"
+    )
+    handle_message(message, load_verbose)
+  }
+}
+
+check_remote_and_pull <- function(pkg_name, path, branch, load_verbose) {
+  cat("Checking if remote branch exists...\n")
+  check_remote <- system2(
+    "cd",
+    args = c(path, paste("&& git fetch && git ls-remote origin", branch)),
+    stdout = TRUE,
+    stderr = FALSE
+  )
+
+  if (!identical(check_remote, character(0))) {
+    cat("\033[0;96mRemote branch exists...\033[0m\n")
+    cat("\033[0;96mPerforming git pull...\033[0m\n")
+    perform_git_pull(pkg_name, path, branch, load_verbose)
+  } else {
+    cat("\033[0;91mRemote branch does not exist...\033[0;94m\n")
+    cat("\033[0;91mSkipping git pull...\033[0;94m\n")
+  }
 }
