@@ -32,7 +32,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c("covr", "devtools"))
+          install.packages("covr")
         shell: Rscript {0}
 
       - name: Get percent coverage
