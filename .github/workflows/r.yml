@@ -6,7 +6,7 @@
 # See https://github.com/r-lib/actions/tree/master/examples#readme for
 # additional example workflows available for the R community.
 
-name: R CMD Check
+name: Run R CMD Check
 
 on:
   push:
@@ -19,7 +19,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  rcmdcheck:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -40,10 +40,10 @@ jobs:
           use-public-rspm: true
 
       - name: Install dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::rcmdcheck
-          needs: check
+        run: |
+          install.packages("devtools")
+        shell: Rscript {0}
 
       - name: Check
-        uses: r-lib/actions/check-r-package@v2
+        run: devtools::check()
+        shell: Rscript {0}
