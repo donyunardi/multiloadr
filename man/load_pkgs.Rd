@@ -58,11 +58,13 @@ if (interactive()) {
   # Switch to "develop" branch and load packages
   load_pkgs(branch_name = "develop")
 
-  # Switch to the "develop" branch, pull the latest changes, and load packages
+  # Switch to the "develop" branch, pull the latest changes,
+  # and load packages
   load_pkgs(branch_name = "develop", git_pull = TRUE)
 
-  # Load packages from "develop" branch if available, or "main" branch otherwise
-  # Pull the latest changes before loading the packages
+  # Load packages from "develop" branch if available,
+  # or "main" branch if otherwise,
+  # and pull the latest changes before loading the packages
   load_pkgs(branch_name = c("develop", "main"), git_pull = TRUE)
 
   # Load packages from specific commit
