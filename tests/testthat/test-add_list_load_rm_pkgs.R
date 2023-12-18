@@ -102,8 +102,17 @@ test_that("add_pkgs, list_pkgs, load_pkgs, rm_pkgs works", {
   )
 
   expect_warning(
-    load_pkgs(branch_name = "update_description", git_pull = TRUE),
+    load_pkgs(branch_name = "update_description"),
     "Can't switch to update_description"
+  )
+
+  expect_output(
+    load_pkgs(branch_name = "update_description", load_verbose = ""),
+    "Can't switch to update_description"
+  )
+
+  expect_error(
+    load_pkgs(branch_name = "update_description", load_verbose = "error")
   )
 
   rm_pkgs("formultiloadrunittest")
