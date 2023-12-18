@@ -95,10 +95,8 @@ test_that("add_pkgs, list_pkgs, load_pkgs, rm_pkgs works", {
       temp_dir,
       "&& cd formultiloadrunittest",
       "&& git checkout main",
-      "&& sed -i '' '12d' DESCRIPTION"
-    ),
-    stdout = FALSE,
-    stderr = FALSE
+      "&& echo 'testing2' >> .gitignore"
+    )
   )
 
   expect_warning(
