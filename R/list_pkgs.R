@@ -36,13 +36,16 @@ list_pkgs <- function() {
     head <- get_current_head(path)
 
     cat(paste0(
-      "\nPackage Name: \033[0;94m", pkg, "\033[0m\n",
+      "\nPackage Name: ", package_name_color(pkg), "\n",
       "Path: ", path, "\n",
-      "HEAD is at \033[0;92m", head, "\033[0m.\n"
+      # "HEAD is at \033[0;92m", head, "\033[0m.\n"
+      "HEAD is at ", head_commit_color(head), "\n"
     ))
 
     if (!identical(current_branch, character(0))) {
-      cat(paste0("Currently in ", current_branch, " branch.\n\n"))
+      cat(paste0(
+        "Currently in ", branch_name_color(current_branch), " branch.\n\n"
+      ))
     } else {
       no_current_branch_msg()
     }
