@@ -55,3 +55,39 @@ no_current_branch_msg <- function() {
     "It is possible that the repository is currently in a detached HEAD state.\033[0m\n"
   ))
 }
+
+#' Color for package name
+#'
+#' This internal function provides color formatting for package name.
+#' @keywords internal
+#' @noRd
+package_name_color <- function(x) {
+  sprintf("\033[0;34m%s\033[0m", x)
+}
+
+#' Color for branch name
+#'
+#' This internal function provides color formatting for branch name.
+#' @keywords internal
+#' @noRd
+branch_name_color <- function(x) {
+  sprintf("\033[0;92m%s\033[0m", x)
+}
+
+#' Color for head commit
+#'
+#' This internal function provides color formatting for head commit.
+#' @keywords internal
+#' @noRd
+head_commit_color <- function(x) {
+  sprintf("\033[0;33m%s\033[0m", x)
+}
+
+#' Color for git action
+#'
+#' This internal function provides color formatting for git action.
+#' @keywords internal
+#' @noRd
+git_action_color <- function(x) {
+  sprintf("\033[0;96m%s\033[0m", x)
+}

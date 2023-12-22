@@ -73,7 +73,7 @@ load_pkgs <- function(
     pkg <- names(pkgs)[i]
     path <- pkgs[[i]]
 
-    cat(paste0("Package: ", pkg, "\n"))
+    cat(paste0("Package: ", package_name_color(pkg), "\n"))
 
     all_branches <- get_local_and_remote_branches(path)
 
@@ -82,8 +82,8 @@ load_pkgs <- function(
         if (branch %in% all_branches) {
           cat(
             paste0(
-              "\033[0;92m", branch, " branch exist for \033[0m",
-              "\033[0;94m", pkg, "\033[0m\n"
+              branch_name_color(branch), " branch exist for ",
+              package_name_color(pkg), "\n"
             )
           )
           switch_branch(pkg, path, branch, load_verbose)
@@ -91,8 +91,7 @@ load_pkgs <- function(
         } else {
           cat(
             paste0(
-              "\033[0;91m", branch, " branch doesn't exist for \033[0m",
-              "\033[0;94m", pkg, "\033[0m\n"
+              branch_name_color(branch), " branch doesn't exist.\n"
             )
           )
         }
@@ -103,21 +102,21 @@ load_pkgs <- function(
 
     if (length(current_branch) > 0 && current_branch %in% all_branches) {
       cat(paste0(
-        "\033[0;94m", pkg, "\033[0m will be loaded from the \033[0;92m",
-        current_branch, "\033[0m branch.\n"
+        "Loading from ",
+        branch_name_color(current_branch), " branch.\n"
       ))
     } else {
       no_current_branch_msg()
-      cat(paste0(pkg, " will be loaded from ", path, "\n"))
+      cat("Loading from ", path, "\n")
     }
 
     if (git_pull) {
-      cat("Attemping to perform git pull...\n")
+      cat(git_action_color("Attemping to perform git pull...\n"))
       if (!identical(current_branch, character(0))) {
         check_remote_and_pull(pkg, path, current_branch, load_verbose)
       } else {
         no_current_branch_msg()
-        cat("Skipping git pull...\n")
+        cat(git_action_color("Skipping git pull...\n"))
       }
     }
 
@@ -134,7 +133,7 @@ load_pkgs <- function(
     }
 
     head <- get_current_head(path)
-    cat(paste0("HEAD is at \033[0;92m", head, "\033[0m.\n"))
+    cat(paste0("HEAD is at ", head_commit_color(head), ".\n"))
 
     load_all(path)
 
@@ -184,9 +183,8 @@ switch_branch <- function(pkg_name, path, branch, load_verbose) {
 
   if (checkout_error) {
     message <- paste(
-      "\033[0;91mCan't switch to", branch, "branch for\033[0;94m",
-      pkg_name, "\033[0m\n",
-      " \033[0;91mPlease check your local changes.\033[0m\n"
+      "Can't switch to", branch, "branch.\n",
+      " Please check your local changes.\n"
     )
     handle_message(message, load_verbose)
   }
@@ -201,17 +199,15 @@ perform_git_pull <- function(pkg_name, path, branch, load_verbose) {
   )
   if (pull_error) {
     message <- paste(
-      "\033[0;91mCan't pull the", branch, "branch for\033[0;94m",
-      pkg_name, "\033[0m\n",
-      " \033[0;91mPlease check your local changes for\033[0;94m",
-      pkg_name, "\033[0m\n"
+      "Can't pull the", branch, "branch.\n",
+      " Please check your local changes.\n"
     )
     handle_message(message, load_verbose)
   }
 }
 
 check_remote_and_pull <- function(pkg_name, path, branch, load_verbose) {
-  cat("Checking if remote branch exists...\n")
+  cat(git_action_color("Checking if remote branch exists...\n"))
   check_remote <- system2(
     "cd",
     args = c(path, paste("&& git fetch && git ls-remote origin", branch)),
@@ -220,11 +216,11 @@ check_remote_and_pull <- function(pkg_name, path, branch, load_verbose) {
   )
 
   if (!identical(check_remote, character(0))) {
-    cat("\033[0;96mRemote branch exists...\033[0m\n")
-    cat("\033[0;96mPerforming git pull...\033[0m\n")
+    cat(git_action_color("Remote branch exists...\n"))
+    cat(git_action_color("Performing git pull...\n"))
     perform_git_pull(pkg_name, path, branch, load_verbose)
   } else {
-    cat("\033[0;91mRemote branch does not exist...\033[0;94m\n")
-    cat("\033[0;91mSkipping git pull...\033[0;94m\n")
+    cat(git_action_color("Remote branch does not exist...\n"))
+    cat(git_action_color("Skipping git pull...\n"))
   }
 }

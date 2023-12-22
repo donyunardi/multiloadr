@@ -29,7 +29,7 @@ rm_pkgs <- function(pkg_names) {
     cat(
       paste0(
         "Removing ",
-        paste(pkgs_exist, collapse = ", "),
+        paste(package_name_color(pkgs_exist), collapse = ", "),
         " from multiloadr.\n"
       )
     )

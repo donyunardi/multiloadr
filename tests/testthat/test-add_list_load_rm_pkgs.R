@@ -40,11 +40,11 @@ test_that("add_pkgs, list_pkgs, load_pkgs, rm_pkgs works", {
   )
   expect_output(
     load_pkgs(),
-    regexp = "formultiloadrunittest.*will be loaded from the"
+    "formultiloadrunittest.*Loading from.*main.*branch"
   )
   expect_output(
     load_pkgs(branch_name = "main"),
-    "main branch exist"
+    "main.*branch exist"
   )
   expect_output(
     load_pkgs(git_pull = TRUE),
@@ -52,7 +52,7 @@ test_that("add_pkgs, list_pkgs, load_pkgs, rm_pkgs works", {
   )
   expect_output(
     load_pkgs(branch_name = "notexist"),
-    "notexist branch doesn't exist"
+    "notexist.*branch doesn't exist"
   )
 
   expect_output(
@@ -79,6 +79,7 @@ test_that("add_pkgs, list_pkgs, load_pkgs, rm_pkgs works", {
     load_pkgs(git_pull = TRUE),
     "Please check your local changes"
   )
+
   expect_output(
     load_pkgs(git_pull = TRUE, load_verbose = "silent"),
     "The current branch could not be located"
