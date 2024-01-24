@@ -3,7 +3,7 @@ test_that("add_pkgs, list_pkgs, load_pkgs, rm_pkgs works", {
   expect_output(list_pkgs(), "No packages to list.")
   expect_output(
     add_pkgs("testing", "/path/to/folder"),
-    "Directory is not an R package"
+    "directory path does not exist or is not an R package"
   )
   expect_output(load_pkgs(), "No packages to load")
 

@@ -52,7 +52,12 @@ add_pkgs <- function(pkg_name, path) {
       ))
     }
   } else {
-    cat("Package not added to multiloadr. Directory is not an R package.\n")
+    cat(paste0(
+      "\n",
+      package_name_color(pkg_name),
+      " not added to multiloadr.",
+      " The directory path does not exist or is not an R package.\n"
+    ))
   }
 
   invisible()

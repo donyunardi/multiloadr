@@ -13,5 +13,10 @@ branches
 \author{
 \strong{Maintainer}: Dony Unardi \email{donyunardi@gmail.com}
 
+Other contributors:
+\itemize{
+  \item Vedha Viyash [contributor]
+}
+
 }
 \keyword{internal}

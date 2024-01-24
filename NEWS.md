@@ -1,4 +1,4 @@
-# multiloadr 0.0.1.9000
+# multiloadr 0.0.1.9001
 * Add the load_verbose argument to the load_pkgs function and improve the warning message when multiloadr is unable to switch or pull the targeted branch.
 
 # multiloadr 0.0.1
