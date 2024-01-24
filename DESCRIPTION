@@ -1,7 +1,7 @@
 Package: multiloadr
 Type: Package
 Title: Load the packages relevant to a project within a session
-Version: 0.0.1.9001
+Version: 0.0.2
 Authors@R: c(
     person("Dony", "Unardi", email = "donyunardi@gmail.com", role = c("aut", "cre")),
     person("Vedha", "Viyash", role = "ctb")
