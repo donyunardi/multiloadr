@@ -1,8 +1,11 @@
 Package: multiloadr
 Type: Package
 Title: Load the packages relevant to a project within a session
-Version: 0.0.1.9000
-Authors@R: person("Dony", "Unardi", email = "donyunardi@gmail.com", role = c("aut", "cre"))
+Version: 0.0.2
+Authors@R: c(
+    person("Dony", "Unardi", email = "donyunardi@gmail.com", role = c("aut", "cre")),
+    person("Vedha", "Viyash", role = "ctb")
+  )
 Description: The purpose of this package is to assist in loading the R packages that serve as
     immediate dependencies for the R package currently being worked on. This package is useful for
     developing multiple interdependent R packages.
@@ -10,7 +13,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Imports:
     devtools,
     stats
